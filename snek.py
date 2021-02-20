@@ -24,7 +24,7 @@ class snek():
 
     # Core Functions
 
-    def create(self):
+    def install(self):
         boiler_plate = {"version": self.VERSION, "Databases": {}, "stats": {"writes": 0, "reads": 0, "databases": 0}}
 
         try:
@@ -36,15 +36,14 @@ class snek():
             print(e)
 
     def uninstall(self):
-        message = f"""
+        print(f"""
         WARNING
 
         THIS WILL DELETE {self.DIR} DIRECTORY
         THIS ACTION CANNOT BE UNDONE PROCEED WITH CAUTION
 
         continue? (y/n)
-        """
-        print(message)
+        """)
         answ = input("> ")
         if answ.upper() in ["Y", "YES"]: shutil.rmtree(self.DIR)
         else: pass # TODO HANDLE ELSE
@@ -54,7 +53,7 @@ class snek():
         info_dir = f"{self.DIR}/info.json"
 
         if os.path.exists(self.DIR): INFO = json.load(open(info_dir))
-        else: self.create() 
+        else: self.install() 
 
         return self.INFO
 
@@ -69,9 +68,8 @@ class snek():
 
 
     def __init__(self):
-        self.info()
-        cmd = input("PRESS ENTER...")
         self.uninstall()
+        
 
 if __name__ == "__main__":
     snek = snek()
