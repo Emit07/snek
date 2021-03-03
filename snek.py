@@ -5,7 +5,6 @@ feel free to make better!!!
 """
 
 import os
-import shutil
 import json
 
 from error_handeler import Handler
@@ -13,13 +12,8 @@ from error_handeler import Handler
 class snek():
 
     VERSION = "0.0.1"
-
-    # Variables
-
-    INFO = {}
+    INFO = {} # TODO CONFIGURE INFO {"version": "0.0.1", "Databases": {}, "stats": {"writes": 0, "reads": 0, "databases": 0}}
     DIR = "data"
-
-    # CONFIG
 
     def directory(self): return self.DIR
     def set_directory(self, directory): self.DIR = directory
@@ -58,7 +52,7 @@ class snek():
         else: self.install() 
 
         return self.INFO
-
+    
     def create_db(self, name):
         try:
             with open(f"{self.DIR}/{name}.json", "w+") as f:
@@ -72,39 +66,6 @@ class snek():
             os.remove(f"{self.DIR}/{name}.json")
         except Exception as e:
             print(e)
-
-    def write_container(
-        self,
-        name,
-        container,
-        value=None,
-    ):
-        Value_None = Handler.check_if_none(value)
-        if Value_None["passed"]:
-            try:
-                raw_json = json.load(open(f"{self.DIR}/{name}.json"))
-                raw_json[container] = value
-                with open(f"{self.DIR}/{name}.json", "w+") as f:
-                    f.write(json.dumps(raw_json))
-                    f.close()
-            except Exception as e:
-                print(e)
-        else:
-            print(Value_None["reason"])
-    
-    def read_container(
-        self,
-        name,
-        container
-    ):
-        try:
-            raw_json = json.load(open(f"{self.DIR}/{name}.json"))
-            return raw_json[container]
-        except Exception as e:
-            print(e)
     
     def __init__(self):
-        print(self.read_container("test", "default"))
-
-if __name__ == "__main__":
-    snek = snek()
+        pass # print(self.read_container("test", "default"))
