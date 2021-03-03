@@ -21,13 +21,22 @@ class snek():
     # Core Functions
 
     def install(self):
-        boiler_plate = {"version": self.VERSION, "Databases": {}, "stats": {"writes": 0, "reads": 0, "databases": 0}}
+        boiler_plate = {
+            "version": self.VERSION,
+            "Databases": {},
+            "stats": {
+                "writes": 0,
+                "reads": 0,
+                "databases": 0
+            }
+        }
 
+        if os.path.exists(self.DIR) == False: os.mkdir(self.DIR)
         try:
-            os.mkdir(self.DIR)
-            with open(f"{self.DIR}/info.json", "w+") as f:
-                f.write(json.dumps(boiler_plate))
-                f.close()
+            if os.path.exists(f"{self.DIR}/info.json") == False:
+                with open(f"{self.DIR}/info.json", "w+") as f:
+                    f.write(json.dumps(boiler_plate))
+                    f.close()
         except Exception as e:
             print(e)
 
@@ -43,15 +52,6 @@ class snek():
         answ = input("> ")
         if answ.upper() in ["Y", "YES"]: shutil.rmtree(self.DIR)
         else: pass # TODO HANDLE ELSE
-
-    def info(self):
-
-        info_dir = f"{self.DIR}/info.json"
-
-        if os.path.exists(self.DIR): INFO = json.load(open(info_dir))
-        else: self.install() 
-
-        return self.INFO
     
     def create_db(self, name):
         try:
@@ -60,12 +60,9 @@ class snek():
                 f.close()
         except Exception as e:
             print(e)
-
-    def remove_db(self, name):
-        try:
-            os.remove(f"{self.DIR}/{name}.json")
-        except Exception as e:
-            print(e)
     
-    def __init__(self):
-        pass # print(self.read_container("test", "default"))
+    def __init__(self, name, dir="data"):
+        self.install()
+        self.create_db(name)
+
+    # TODO add return value of object for insert and remove value
