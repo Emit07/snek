@@ -16,7 +16,6 @@ class Snek():
         create a storage object from here and map it
         to be used with snek
         """
-
         self.storage = Storage(_dir)
 
     def insert(self, value : dict):
@@ -47,9 +46,13 @@ class Snek():
         
         return self.storage.find(value)
     
-    def query(self, value):
+    def key_exists(self, value):
 
-        print(self.storage.query(value))
+        return self.storage.key_exists()
+
+    def exists(self, value):
+
+        return self.storage.exists(value)
 
     def __repr__(self):
 
@@ -57,7 +60,8 @@ class Snek():
         this returns some information about the object
         """
 
-        return '<{}>'.format(_storage._dir)
+        # return '<{}>'.format(_storage._dir)
+        return str(self)
 
     def __len__(self):
         """
