@@ -27,11 +27,9 @@ class Storage:
         del pulled[value]
         self.write(pulled)
 
-    # def find(self, value : dict):
-
     def query(self, value : dict):
-        try:
-            raw_json = json.load(open(f"{self.DIR}/{name}.json"))
-            return raw_json[container]
-        except Exception as e:
-            print(e)
+        pass
+        
+    def find(self, value : str):
+        pulled = self.read()
+        return pulled[value]

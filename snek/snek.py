@@ -29,7 +29,23 @@ class Snek():
         self.storage.insert(value)
     
     def remove(self, value : str):
+
+        """
+        maps snek class to storage
+        TODO find a better way to do this
+        """
+
         self.storage.remove(value)
+    
+    def find(self, value : str):
+
+        """
+        finds value
+        mapped to storage
+        TODO find a better way to do this
+        """
+        
+        return self.storage.find(value)
     
     def __repr__(self):
 
