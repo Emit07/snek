@@ -47,6 +47,10 @@ class Snek():
         
         return self.storage.find(value)
     
+    def query(self, value):
+
+        print(self.storage.query(value))
+
     def __repr__(self):
 
         """ 

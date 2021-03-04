@@ -27,8 +27,10 @@ class Storage:
         del pulled[value]
         self.write(pulled)
 
-    def query(self, value : dict):
-        pass
+    def query(self, value):
+        pulled = self.read()
+        pulledlist = list(value) 
+        return pulledlist[0]
         
     def find(self, value : str):
         pulled = self.read()
