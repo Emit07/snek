@@ -6,7 +6,7 @@ import os
 import json
 from storage import Storage
 
-class Snek():
+class Snek(Storage):
 
     storage = None
 
@@ -17,42 +17,6 @@ class Snek():
         to be used with snek
         """
         self.storage = Storage(_dir)
-
-    def insert(self, value : dict):
-
-        """
-        maps snek class to storage 
-        TODO find a better way to do this
-        """
-
-        self.storage.insert(value)
-    
-    def remove(self, value : str):
-
-        """
-        maps snek class to storage
-        TODO find a better way to do this
-        """
-
-        self.storage.remove(value)
-    
-    def find(self, value : str):
-
-        """
-        finds value
-        mapped to storage
-        TODO find a better way to do this
-        """
-        
-        return self.storage.find(value)
-    
-    def key_exists(self, value):
-
-        return self.storage.key_exists()
-
-    def exists(self, value):
-
-        return self.storage.exists(value)
 
     def __repr__(self):
 
