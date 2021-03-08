@@ -1,28 +1,30 @@
 
 import os
 import json
+import config
 
-class Storage:
-
-    _dir = ""
-
-    def __init__(self, _dir):
-        self._dir = _dir
+class Storage(object):
 
     def read(self):
-        return json.load(open(self._dir))
+        return json.load(open(config._dir))
 
     def write(self, value):
-        with open(self._dir, "w+") as f:
-            f.write(json.dumps(value))
+        
+        data = json.dumps(value, ensure_ascii=False, indent=4)
+        
+        with open(config._dir, "w+") as f:
+            f.write(data)
             f.close()
 
     def insert(self, value : dict):
-        pulled = json.load(open(self._dir))
+        
+        pulled = json.load(open(config._dir))
+        
         pulled.update(value)
         self.write(pulled)
         
     def remove(self, value):
+        
         pulled = self.read()
         del pulled[value]
         self.write(pulled)

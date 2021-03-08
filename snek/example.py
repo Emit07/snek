@@ -2,7 +2,7 @@ from snek import Snek
 
 snek = Snek("database.json")
 
-print(snek)
+# print(snek)
 
-results = snek.exists({"name": "Alessandro"})
+results = snek.write({"class": "history"})
 print(results)
