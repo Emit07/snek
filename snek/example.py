@@ -1,8 +1,18 @@
+import os
+import json
+
 from snek import Snek
 
-snek = Snek("database.json")
 
-# print(snek)
+DIR = "database.json"
+snek = Snek(DIR)
 
-results = snek.write({"class": "history"})
-print(results)
+def clear():
+    global DIR
+    os.rmdir(DIR)
+
+def test_write(value):
+    snek.insert(value)
+
+if __name__ == "__main__":
+    test_write({"name": "John Smith"})
