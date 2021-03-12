@@ -18,7 +18,6 @@ class File:
 
 class Storage(object):
 
-
     def read(self): 
         return json.load(open(config._dir))
 
