@@ -1,6 +1,7 @@
 
 import os
-import json 
+import json
+import config
 
 class File:
 
@@ -8,26 +9,24 @@ class File:
         self.file = open(filedir, operation)
     
     def __enter__(self):
-        print("ENTER")
         return self.file
     
     def __exit__(self, type, value, traceback):
-        print("EXIT")
         self.file.close()
         # TODO create exception handler
 
 class Storage(object):
 
     def read(self): 
-        return json.load(open(config._dir))
+        return json.load(open(config.__dir__))
 
     def write(self, value):
         data = json.dumps(value, ensure_ascii=False, indent=4)
-        with File(config._dir, "w+") as f: f.write(data)
+        with File(config.__dir__, "w+") as f: f.write(data)
 
     def insert(self, value : dict):
         
-        pulled = json.load(open(config._dir))
+        pulled = json.load(open(config.__dir__))
         pulled.update(value)
         self.write(pulled)
         
@@ -36,8 +35,17 @@ class Storage(object):
         pulled = self.read()
         del pulled[value]
         self.write(pulled)
+    
+    def find(self, value):
+        # TODO make this work, mongodb style find
+        pass
 
-    def find(self, value : dict):
+    def exists(self, value : dict):
 
         pulled = self.read()
-        return 
+        return all(pulled.get(key, None) == val for key, val in value.items())
+
+    def key(self, value):
+
+        pulled = self.read()
+        return pulled[value]

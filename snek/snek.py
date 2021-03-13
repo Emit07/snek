@@ -17,7 +17,7 @@ class Snek(Storage):
         TODO map this to a config object
         """
 
-        config._dir = _dir
+        config.__dir__ = _dir
 
     def __repr__(self):
 
@@ -26,7 +26,7 @@ class Snek(Storage):
         TODO add more info
         """
 
-        return "<{}>".format(config._dir)
+        return "<{}>".format(config.__dir__)
 
     def __len__(self):
         """

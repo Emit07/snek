@@ -15,4 +15,5 @@ def test_write(value):
     snek.insert(value)
 
 if __name__ == "__main__":
-    test_write({"name": "John Smith"})
+    # test_write({"name": "John Smith"})
+    print(snek.find({"name": "John asdsSmith"}))
