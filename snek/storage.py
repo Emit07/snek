@@ -1,7 +1,7 @@
 
 import os
 import json
-import config
+import snek.config as config
 
 class File:
 
@@ -25,11 +25,13 @@ class Storage(object):
         with File(config.__dir__, "w+") as f: f.write(data)
 
     def insert(self, value : dict):
-        
-        pulled = json.load(open(config.__dir__))
-        pulled.update(value)
-        self.write(pulled)
-        
+        try:
+            pulled = json.load(open(config.__dir__))
+            pulled.update(value)
+            self.write(pulled)
+        except Exception as e:
+            raise e
+
     def remove(self, value):
         
         pulled = self.read()

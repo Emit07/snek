@@ -4,8 +4,8 @@ Main module of snek
 
 import os
 import json
-from storage import Storage
-import config
+from snek.storage import Storage
+import snek.config as config
 
 class Snek(Storage):
 
