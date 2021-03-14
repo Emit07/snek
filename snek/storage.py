@@ -18,15 +18,26 @@ class File:
 class Storage(object):
 
     def read(self): 
+        
+        """
+        Reads from json database file
+        TODO if you properly cose the
+        file it results in ugly code
+        TODO properly close the file
+        without having ugly function
+        """
+
         return json.load(open(config.__dir__))
 
     def write(self, value):
         data = json.dumps(value, ensure_ascii=False, indent=4)
-        with File(config.__dir__, "w+") as f: f.write(data)
+        with File(config.__dir__, "w+") as f:
+            f.write(data)
+            f.close()
 
     def insert(self, value : dict):
         try:
-            pulled = json.load(open(config.__dir__))
+            pulled = self.read()
             pulled.update(value)
             self.write(pulled)
         except Exception as e:
@@ -45,9 +56,9 @@ class Storage(object):
     def exists(self, value : dict):
 
         pulled = self.read()
-        return all(pulled.get(key, None) == val for key, val in value.items())
+        return all(item in pulled.items() for item in value.items())
 
     def key(self, value):
 
         pulled = self.read()
-        return pulled[value]
+        return pulled[value] if value in pulled else None
