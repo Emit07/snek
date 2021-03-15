@@ -26,7 +26,7 @@ class Storage(object):
         TODO properly close the file
         without having ugly function
         """
-
+        print(json.load(open(config.__dir__)))
         return json.load(open(config.__dir__))
 
     def write(self, value):
@@ -36,12 +36,9 @@ class Storage(object):
             f.close()
 
     def insert(self, value : dict):
-        try:
-            pulled = self.read()
-            pulled.update(value)
-            self.write(pulled)
-        except Exception as e:
-            raise e
+        pulled = self.read()
+        writenew = pulled.append(value)
+        self.write(pulled)
 
     def remove(self, value):
         
