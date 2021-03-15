@@ -18,15 +18,6 @@ class File:
 class Storage(object):
 
     def read(self): 
-        
-        """
-        Reads from json database file
-        TODO if you properly cose the
-        file it results in ugly code
-        TODO properly close the file
-        without having ugly function
-        """
-        print(json.load(open(config.__dir__)))
         return json.load(open(config.__dir__))
 
     def write(self, value):
