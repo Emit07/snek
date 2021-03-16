@@ -27,6 +27,7 @@ class Storage(object):
             f.close()
 
     def insert(self, value : dict):
+        # TODO ugly code fix it
         pulled = self.read()
         pulled.append(value)
         self.write(pulled)
@@ -43,10 +44,21 @@ class Storage(object):
         # TODO does not run fast fix that
         pulled = self.read()
         if isinstance(value, dict):
+            returns = []
             for index, item in enumerate(pulled):
                 res = value.items() <= item.items() 
-                if res: return item
+                if res: returns.append(item)
+            return returns
     
+    def findOne(self, value : dict):
+        # TODO does not run fast fix that
+        pulled = self.read()
+        if isinstance(value, dict):
+            returns = []
+            for index, item in enumerate(pulled):
+                res = value.items() <= item.items() 
+                if res: return items
+
     def update(self, value : dict):
         pass
 
@@ -56,11 +68,11 @@ class Storage(object):
         for index, item in enumerate(pulled):
             return value.items() <= item.items() 
     
-    def initdb(self):
-        os.mkdir(config.__dir__)
-        self.write([])
-
     def key(self, value):
 
         pulled = self.read()
         return pulled[value] if value in pulled else None
+    
+    def initdb(self):
+        os.mkdir(config.__dir__)
+        self.write([])

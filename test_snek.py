@@ -12,9 +12,9 @@ class TestSnek(unittest.TestCase):
 
     def test_find(self):
         print("FIND")
-        self.assertEqual(self.db.find({"name": "Giovanni Esposito"}), {"name": "Giovanni Esposito", "age": 17, "classes": ["Math", "Science", "Calculus"]})
+        self.assertEqual(self.db.find({"name": "Giovanni Esposito"}), [{"name": "Giovanni Esposito", "age": 17, "classes": ["Math", "Science", "Calculus"]}])
         self.assertEqual(self.db.find("Jane"), None)
-        self.assertEqual(self.db.find({"name": "Johnny B. Good"}), None)
+        self.assertEqual(self.db.find({"name": "Johnny B. Good"}), [])
         self.hasfound = True
 
     def test_insert(self):
@@ -22,14 +22,14 @@ class TestSnek(unittest.TestCase):
         self.db.insert({"new inserted": True})
         if self.hasfound:
             self.assertEqual(self.db.find({"new inserted": True}), {"new inserted": True})
-            self.assertEqual(self.db.find({"this exists": False}), None)
-            self.assertEqual(self.db.find({12345}), None)
+            self.assertEqual(self.db.find({"this exists": False}), [])
+            self.assertEqual(self.db.find({12345}), [])
     
     def test_remove(self):
         print("REMOVE")
-        self.assertEqual(self.db.find({"new inserted": True}), {"new inserted": True})
+        self.assertEqual(self.db.find({"new inserted": True}), [{"new inserted": True}])
         self.db.remove({"new inserted": True})
-        self.assertEqual(self.db.find({"new inserted": True}), None)
+        self.assertEqual(self.db.find({"new inserted": True}), [])
 
     def test_key(self):
         print("KEY")

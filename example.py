@@ -5,9 +5,8 @@ db = Snek("database.json")
 
 pulled = json.load(open("database.json"))
 
-value = {"name": "Alessandro De Leo"}
+print(db.find({"new inserted": True}))
 
-db.remove(value)
 
         # self.dbvalue1= {
         #     "name": "John Smith",
