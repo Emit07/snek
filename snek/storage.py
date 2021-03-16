@@ -28,23 +28,35 @@ class Storage(object):
 
     def insert(self, value : dict):
         pulled = self.read()
-        writenew = pulled.append(value)
+        pulled.append(value)
         self.write(pulled)
 
     def remove(self, value):
         
         pulled = self.read()
-        del pulled[value]
+        for index, item in enumerate(pulled):
+            if value.items() <= item.items(): del pulled[index]
+
         self.write(pulled)
     
-    def find(self, value):
-        # TODO make this work, mongodb style find
-        pass
+    def find(self, value : dict):
+        # TODO does not run fast fix that
+        pulled = self.read()
+        if isinstance(value, dict):
+            for index, item in enumerate(pulled):
+                res = value.items() <= item.items() 
+                if res: return item
+
 
     def exists(self, value : dict):
 
         pulled = self.read()
-        return all(item in pulled.items() for item in value.items())
+        for index, item in enumerate(pulled):
+            return value.items() <= item.items() 
+    
+    def initdb(self):
+        os.mkdir(config.__dir__)
+        self.write([])
 
     def key(self, value):
 

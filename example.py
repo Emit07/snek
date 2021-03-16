@@ -5,9 +5,9 @@ db = Snek("database.json")
 
 pulled = json.load(open("database.json"))
 
-for index, item in enumerate(pulled):
-    if "name" in item:
-        print(index, item)
+value = {"name": "Alessandro De Leo"}
+
+db.remove(value)
 
 # namein = input("name: ")
 # agein = int(input("age: "))
