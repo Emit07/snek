@@ -46,7 +46,9 @@ class Storage(object):
             for index, item in enumerate(pulled):
                 res = value.items() <= item.items() 
                 if res: return item
-
+    
+    def update(self, value : dict):
+        pass
 
     def exists(self, value : dict):
 
