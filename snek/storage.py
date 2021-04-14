@@ -28,9 +28,8 @@ class Storage(object):
 
     def insert(self, value : dict):
         # TODO ugly code fix it
-        pulled = self.read()
-        pulled.append(value)
-        self.write(pulled)
+        db = self.read().append(value)
+        self.write(db)
 
     def remove(self, value):
         

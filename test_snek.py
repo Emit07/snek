@@ -1,39 +1,41 @@
-import unittest
 from snek.snek import Snek
 
-class TestSnek(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(self):
-        print("SETUP")
-        self.db = Snek("database.json")
-        self.hasfound = False
-        
+class TestSnek:
 
     def test_find(self):
-        print("FIND")
-        self.assertEqual(self.db.find({"name": "Giovanni Esposito"}), [{"name": "Giovanni Esposito", "age": 17, "classes": ["Math", "Science", "Calculus"]}])
-        self.assertEqual(self.db.find("Jane"), None)
-        self.assertEqual(self.db.find({"name": "Johnny B. Good"}), [])
-        self.hasfound = True
+        print("TESTING FIND")
 
-    def test_insert(self):
-        print("INSERT")
-        self.db.insert({"new inserted": True})
-        if self.hasfound:
-            self.assertEqual(self.db.find({"new inserted": True}), {"new inserted": True})
-            self.assertEqual(self.db.find({"this exists": False}), [])
-            self.assertEqual(self.db.find({12345}), [])
-    
-    def test_remove(self):
-        print("REMOVE")
-        self.assertEqual(self.db.find({"new inserted": True}), [{"new inserted": True}])
-        self.db.remove({"new inserted": True})
-        self.assertEqual(self.db.find({"new inserted": True}), [])
+        db_find_name = (
+            self.db.find({"name": "Don Vito Corleone"}),
+            [{"name": "Don Vito Corleone", "age": 62}]
+        )
+        db_find_age = (
+            self.db.find({"age": 59}),
+            [{"name": "Michael", "age": 59}]
+        )
+        db_find_empty = (
+            self.db.find({"name": "Paulie"}), 
+            []
+        )
 
-    def test_key(self):
-        print("KEY")
+        find_tests = [db_find_name, db_find_age, db_find_empty]
+
+        for index, test in enumerate(find_tests):
+            assert test[0] == test[1], f"FIND TEST {index+1}/{len(find_tests)} - ERROR : SHOULD RESULT AS {test}"
+            print(f"FIND TEST {index+1}/{len(find_tests)} - PASSED")
+
+        print("FIND TESTS PASSED")
+
+    def __init__(self):
+        print("SETUP")
+        self.db = Snek("test_database.json")
         
+        # TESTS
+
+        self.test_find()
+        # self.test_insert()
+        # self.test_remove()
+        # self.test_key()
 
 if __name__ == "__main__":
-    unittest.main()
+    TestSnek()

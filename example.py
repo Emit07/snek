@@ -1,12 +1,14 @@
 from snek.snek import Snek
 import json
 
-db = Snek("database.json")
+assert 9 == 8, "FAILED"
+print("PASSED")
 
-pulled = json.load(open("database.json"))
+# db = Snek("database.json")
 
-print(db.find({"new inserted": True}))
+# pulled = json.load(open("database.json"))
 
+# print(db.find({"new inserted": True}))
 
         # self.dbvalue1= {
         #     "name": "John Smith",
