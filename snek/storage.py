@@ -1,7 +1,25 @@
 
 import os
+import io
 import json
 import snek.config as config
+
+def create(path: str, create_dir):
+    """
+    Create the database file if the file does not already exist
+    """
+
+    if create_dir:
+        base_dir = os.path.dirname(path)
+
+        if base_dir == "":
+            base_dir = "/"
+
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+    with open(path, "a"):
+        pass
 
 class File:
 
@@ -15,63 +33,65 @@ class File:
         self.file.close()
         # TODO create exception handler
 
-class Storage(object):
 
-    def read(self): 
-        return json.load(open(config.__dir__))
+class Storage:
 
-    def write(self, value):
-        data = json.dumps(value, ensure_ascii=False, indent=4)
-        with File(config.__dir__, "w+") as f:
-            f.write(data)
-            f.close()
+    def __init__(self, path: str, interaction_mode="r+", create_dir=False):
+        """
+        Starts the Storage Object
+        """
 
-    def insert(self, value : dict):
-        # TODO ugly code fix it
-        db = self.read().append(value)
-        self.write(db)
+        self._mode = interaction_mode
 
-    def remove(self, value):
-        
-        pulled = self.read()
-        for index, item in enumerate(pulled):
-            if value.items() <= item.items(): del pulled[index]
+        # Checks to see if there is any write characters to prevent file being deleted
+        # Creates file if does not exist
+        if any(character in self._mode for character in ("+", "w", "a")):
+            create(path, create_dir=create_dir)
 
-        self.write(pulled)
-    
-    def find(self, value : dict):
-        # TODO does not run fast fix that
-        pulled = self.read()
-        if isinstance(value, dict):
-            returns = []
-            for index, item in enumerate(pulled):
-                res = value.items() <= item.items() 
-                if res: returns.append(item)
-            return returns
-    
-    def findOne(self, value : dict):
-        # TODO does not run fast fix that
-        pulled = self.read()
-        if isinstance(value, dict):
-            returns = []
-            for index, item in enumerate(pulled):
-                res = value.items() <= item.items() 
-                if res: return items
+        # Handle object to talk to the file
+        self._handle = open(path, "r+")
 
-    def update(self, value : dict):
-        pass
 
-    def exists(self, value : dict):
+    def close(self) -> None:
+        self._handle.close()
 
-        pulled = self.read()
-        for index, item in enumerate(pulled):
-            return value.items() <= item.items() 
-    
-    def key(self, value):
 
-        pulled = self.read()
-        return pulled[value] if value in pulled else None
-    
-    def initdb(self):
-        os.mkdir(config.__dir__)
-        self.write([])
+    # TODO add return type hint
+    def read(self):
+        # grabs the size to check if file is empty
+        size = self.size()
+
+        if not size:
+            # If file is empty return none
+            return None
+        else:
+            self._handle.seek(0)
+
+            # returns the loaded json content
+            return json.load(self._handle)
+
+    # TODO add return type hint
+    # TODO add data type hint
+    def write(self, data) -> None:
+        # Moves cursor to start
+        self._handle.seek(0)
+
+        serialized = json.dumps(data)
+
+        try:
+            self._handle.write(serialized)
+        except io.UnsupportedOperation:
+            raise IOError("Cannot write. Access mode is \"{0}\"".format(self._mode))
+
+        # make sure file is written
+        self._handle.flush()
+        os.fsync(self._handle.fileno())
+
+        self._handle.truncate()
+
+    def size(self) -> None:
+        # Returns the size of the database file
+
+        # Moves cusor to the end of file and then returns the length
+        self._handle.seek(0, os.SEEK_END)
+        return self._handle.tell()

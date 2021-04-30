@@ -1,5 +1,7 @@
 from snek.snek import Snek
 
+from snek.storage import Storage
+
 class TestSnek:
 
     def test_find(self):
@@ -38,4 +40,6 @@ class TestSnek:
         # self.test_key()
 
 if __name__ == "__main__":
-    TestSnek()
+    # TestSnek()
+
+    stor = Storage("test_database.json", "w+", True)

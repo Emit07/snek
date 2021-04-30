@@ -1,3 +1,4 @@
+
 """ 
 Main module of snek
 """
@@ -19,6 +20,7 @@ class Snek(Storage):
 
         config.__dir__ = _dir
 
+
     def __repr__(self):
 
         """ 
@@ -27,6 +29,7 @@ class Snek(Storage):
         """
 
         return "<{}>".format(config.__dir__)
+
 
     def __len__(self):
         """
