@@ -42,4 +42,4 @@ class TestSnek:
 if __name__ == "__main__":
     # TestSnek()
 
-    stor = Storage("test_database.json", "w+", True)
+    stor = Snek("test_database.json", "w+", True)

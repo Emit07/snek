@@ -8,9 +8,9 @@ import json
 from snek.storage import Storage
 import snek.config as config
 
-class Snek(Storage):
+class Snek:
 
-    def __init__(self, _dir):
+    def __init__(self, path: str, interaction_mode="r+", create_dir=False):
 
         """
         create a config object from here and map it
@@ -19,7 +19,6 @@ class Snek(Storage):
         """
 
         config.__dir__ = _dir
-
 
     def __repr__(self):
 

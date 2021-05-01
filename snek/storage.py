@@ -21,19 +21,6 @@ def create(path: str, create_dir):
     with open(path, "a"):
         pass
 
-class File:
-
-    def __init__(self, filedir, operation):
-        self.file = open(filedir, operation)
-    
-    def __enter__(self):
-        return self.file
-    
-    def __exit__(self, type, value, traceback):
-        self.file.close()
-        # TODO create exception handler
-
-
 class Storage:
 
     def __init__(self, path: str, interaction_mode="r+", create_dir=False):
