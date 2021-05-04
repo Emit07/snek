@@ -10,7 +10,7 @@ import snek.config as config
 
 class Snek:
 
-    def __init__(self, path: str, interaction_mode="r+", create_dir=False):
+    def __init__(self, **kwargs):
 
         """
         create a config object from here and map it
@@ -18,7 +18,11 @@ class Snek:
         TODO map this to a config object
         """
 
-        config.__dir__ = _dir
+        if ("path", "mode") not in kwargs:
+
+        config.__dir__ = path
+
+        # self._storage = Storage(kwargs)
 
     def __repr__(self):
 
