@@ -18,11 +18,18 @@ class Snek:
         TODO map this to a config object
         """
 
-        if ("path", "mode") not in kwargs:
-
         config.__dir__ = path
 
         # self._storage = Storage(kwargs)
+
+    def __enter__(self):
+
+        return self
+
+    def __exit__(self):
+
+        if self._open:
+            self.storage.close()
 
     def __repr__(self):
 
