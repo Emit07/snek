@@ -23,12 +23,12 @@ def create(path: str, create_dir):
 
 class Storage:
 
-    def __init__(self, path: str, interaction_mode="r+", create_dir=False):
+    def __init__(self, path: str, mode="r+", create_dir=False):
         """
         Starts the Storage Object
         """
 
-        self._mode = interaction_mode
+        self._mode = mode
 
         # Checks to see if there is any write characters to prevent file being deleted
         # Creates file if does not exist

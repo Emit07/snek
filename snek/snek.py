@@ -10,7 +10,7 @@ import snek.config as config
 
 class Snek:
 
-    def __init__(self, **kwargs):
+    def __init__(self, path: str, mode="r+", create_dir=False):
 
         """
         create a config object from here and map it
@@ -20,7 +20,22 @@ class Snek:
 
         config.__dir__ = path
 
-        # self._storage = Storage(kwargs)
+        self._documents = {}
+
+        self._storage = Storage(path, mode, create_dir)
+
+
+    def update_db(self, action, data=None):
+        
+        return 0
+
+    def insert(self, data: dict) -> int:
+
+        if not isinstance(data, dict):
+            raise ValueError("Value is not dictionary type.")
+
+
+
 
     def __enter__(self):
 
