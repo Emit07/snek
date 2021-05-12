@@ -2,7 +2,6 @@
 import os
 import io
 import json
-import snek.config as config
 
 def create(path: str, create_dir):
     """
@@ -38,11 +37,6 @@ class Storage:
         # Handle object to talk to the file
         self._handle = open(path, "r+")
 
-
-    def close(self) -> None:
-        self._handle.close()
-
-
     # TODO add return type hint
     def read(self):
         # grabs the size to check if file is empty
@@ -76,9 +70,17 @@ class Storage:
 
         self._handle.truncate()
 
+    @property
     def size(self) -> None:
         # Returns the size of the database file
 
         # Moves cusor to the end of file and then returns the length
         self._handle.seek(0, os.SEEK_END)
         return self._handle.tell()
+
+    def close(self) -> None:
+        """
+        Closes the database and ensures that it is disconnected properly
+        """
+
+        self._handle.close()

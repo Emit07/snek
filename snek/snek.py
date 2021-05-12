@@ -1,41 +1,31 @@
 
 """ 
-Main module of snek
+Main module of snek. Handles the setup and configuration of the database
 """
 
 import os
 import json
-from snek.storage import Storage
-import snek.config as config
+
+from .storage import Storage
+from .document import Document
 
 class Snek:
 
     def __init__(self, path: str, mode="r+", create_dir=False):
 
-        """
-        create a config object from here and map it
-        to be used with snek
-        TODO map this to a config object
-        """
-
-        config.__dir__ = path
-
-        self._documents = {}
-
         self._storage = Storage(path, mode, create_dir)
+        self._documents = []
 
+    def create_document(self) -> int:
 
-    def update_db(self, action, data=None):
-        
-        return 0
+        document = Document()
+        self._documents.append(document)
 
-    def insert(self, data: dict) -> int:
+        return len(self._documents)-1
 
-        if not isinstance(data, dict):
-            raise ValueError("Value is not dictionary type.")
+    def remove_document(self):
 
-
-
+        pass
 
     def __enter__(self):
 
@@ -53,7 +43,9 @@ class Snek:
         TODO add more info
         """
 
-        return "<{}>".format(config.__dir__)
+        return "<{}>"
+
+        # return "<{}>".format()
 
 
     def __len__(self):
