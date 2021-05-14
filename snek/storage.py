@@ -24,7 +24,8 @@ class Storage:
 
     def __init__(self, path: str, mode="r+", create_dir=False):
         """
-        Starts the Storage Object
+        Starts the storage object. if file does not exist, create it.
+        Also starts up a simple cache so the  
         """
 
         self._mode = mode
@@ -40,16 +41,17 @@ class Storage:
     # TODO add return type hint
     def read(self):
         # grabs the size to check if file is empty
-        size = self.size()
+        size = self.size
 
         if not size:
-            # If file is empty return none
+            # If file is empty return none, TODO seems like it should show an error or return an empty list
             return None
         else:
             self._handle.seek(0)
 
             # returns the loaded json content
             return json.load(self._handle)
+
 
     # TODO add return type hint
     # TODO add data type hint
@@ -70,6 +72,11 @@ class Storage:
 
         self._handle.truncate()
 
+    def close(self) -> None:
+        """
+        Closes the database and ensures that it is disconnected properly
+        """
+
     @property
     def size(self) -> None:
         # Returns the size of the database file
@@ -78,9 +85,14 @@ class Storage:
         self._handle.seek(0, os.SEEK_END)
         return self._handle.tell()
 
-    def close(self) -> None:
-        """
-        Closes the database and ensures that it is disconnected properly
-        """
+class Cache:
 
-        self._handle.close()
+    def __init__(self):
+
+        self.memory = None
+
+    def read(self) -> list:
+        return self.memory
+
+    def write(self, value : dict) -> list:
+        self.memory = value
