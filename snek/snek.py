@@ -7,29 +7,38 @@ import os
 import json
 
 from .storage import Storage
-from .document import Document
 
 class Snek:
 
     def __init__(self, path: str, mode="r+", create_dir=False):
 
         self._storage = Storage(path, mode, create_dir)
-        self._documents = []
 
-    def create_document(self):
 
-        document = Document(self._storage)
-        self._documents.append(document)
+    def insert(self, data: dict):
+        
+        if not isinstance(document, dict):
+            raise ValueError("Data is not dict")
 
-        return document
+        database = self._storage.read()
 
-    def remove_document(self):
+        if data is None:
+            pass
 
-        pass
+    def get_all(self):
+
+        return self._storage.read()
+
+    @property
+    def storage(self) -> Storage:
+
+        return self._storage
+    
 
     def __enter__(self):
 
         return self
+
 
     def __exit__(self):
 

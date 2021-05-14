@@ -9,14 +9,13 @@ class Document:
 		"""		
 
 		self._storage = storage
-
 		self._id = document_id
 
 	def insert(self, value: dict) -> None:
 		content = self._storage.read()
 		content.append(value)
 
-		return content
+		return content[self._id]
 
 
 	def remove(self):
