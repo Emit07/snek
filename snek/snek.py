@@ -17,13 +17,19 @@ class Snek:
 
     def insert(self, data: dict):
         
-        if not isinstance(document, dict):
+        if not isinstance(data, dict):
             raise ValueError("Data is not dict")
 
         database = self._storage.read()
 
         if data is None:
-            pass
+            return
+        else:
+            return database
+
+        def update(database: list):
+
+            database.append(data)
 
     def get_all(self):
 
