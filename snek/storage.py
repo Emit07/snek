@@ -17,6 +17,7 @@ def create(path: str, create_dir):
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
+    # Creates the file
     with open(path, "a"):
         pass
 
@@ -59,7 +60,7 @@ class Storage:
         # Moves cursor to start
         self._handle.seek(0)
 
-        serialized = json.dumps(data)
+        serialized = json.dumps(data, indent=4)
 
         try:
             self._handle.write(serialized)
@@ -74,8 +75,10 @@ class Storage:
 
     def close(self) -> None:
         """
-        Closes the database and ensures that it is disconnected properly
+        Closes the database and ensures that it is disconnected cleanly and properly
         """
+
+        self._handle.close()
 
     @property
     def size(self) -> None:
