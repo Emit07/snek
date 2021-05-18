@@ -20,7 +20,7 @@ class Snek:
 
         self._open = True
 
-    def insert(self, data: dict):
+    def insert(self, data: dict) -> int:
         """
         Inserts a single object into the database.
         """
@@ -29,6 +29,7 @@ class Snek:
         if not isinstance(data, dict):
             # TODO rewrite a better error message
             raise ValueError("Data is not dict")
+
 
         # Create a function to update the database 
         def update(database: list):
@@ -39,7 +40,39 @@ class Snek:
             # writes to the database
             self._storage.write(database)
 
+            return len(database)-1
+
+        _id = self._update_database(update)
+
+        return _id
+
+    def remove(self, object_id: int) -> None:
+        """
+        Deletes an object based on its id
+        """
+
+        # Returns an error if the object is not an int
+        if not isinstance(object_id, int):
+            # TODO rewrite a better error message
+            raise ValueError("id is not int")
+
+        def update(database: list):
+
+            # Checks if the id exists, if not return an error
+            if len(database)-1 >= object_id:
+
+                # Removes the document with the id
+                database.pop(object_id)
+
+                self._storage.write(database)
+
+            else:
+
+                # TODO Rewrite a better error message
+                raise IndexError("Id does not exists")
+
         self._update_database(update)
+
 
     def _update_database(self, updater):
         """
@@ -55,8 +88,10 @@ class Snek:
             database = []
 
         # calls the nested update function
-        updater(database)
+        return_value = updater(database)
 
+        if return_value is not None:
+            return return_value
 
     @property
     def storage(self) -> Storage:
