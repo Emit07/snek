@@ -21,7 +21,7 @@ class Snek:
         self._open = True
         self._id = None
 
-    def insert(self, data: dict) -> None:
+    def insert(self, data: dict) -> int:
         """
         Inserts a single object into the database.
         TODO return the inserted object ID
@@ -32,6 +32,7 @@ class Snek:
             # TODO rewrite a better error message
             raise ValueError("Data is not dict")
 
+        _id = self._generate_id()
 
         # Create a function to update the database 
         def update(database: list):
@@ -42,6 +43,7 @@ class Snek:
 
         self._update_database(update)
 
+        return _id
 
     def remove(self, object_id: int) -> None:
         """
@@ -81,6 +83,12 @@ class Snek:
             return _id
 
         database = self._storage.read()
+
+        if not database:
+            self._id = 0
+
+            return self._id
+
 
         self._id = len(database)
 
