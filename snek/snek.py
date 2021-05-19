@@ -19,10 +19,12 @@ class Snek:
         self._storage = Storage(*args, **kwargs)
 
         self._open = True
+        self._id = None
 
-    def insert(self, data: dict) -> int:
+    def insert(self, data: dict) -> None:
         """
         Inserts a single object into the database.
+        TODO return the inserted object ID
         """
 
         # Returns an error if the object is not a dictionary
@@ -37,14 +39,9 @@ class Snek:
             # appends the object to the database
             database.append(data)
 
-            # writes to the database
-            self._storage.write(database)
 
-            return len(database)-1
+        self._update_database(update)
 
-        _id = self._update_database(update)
-
-        return _id
 
     def remove(self, object_id: int) -> None:
         """
@@ -64,8 +61,6 @@ class Snek:
                 # Removes the document with the id
                 database.pop(object_id)
 
-                self._storage.write(database)
-
             else:
 
                 # TODO Rewrite a better error message
@@ -73,6 +68,23 @@ class Snek:
 
         self._update_database(update)
 
+
+    def _generate_id(self) -> int:
+        """
+        If a new object needs to be inserted an ID will be generated here
+        """
+
+        if self._id is not None:
+            _id = self._id
+            self._id += 1
+
+            return _id
+
+        database = self._storage.read()
+
+        self._id = len(database)
+
+        return self._id
 
     def _update_database(self, updater):
         """
@@ -88,10 +100,9 @@ class Snek:
             database = []
 
         # calls the nested update function
-        return_value = updater(database)
+        updater(database)
 
-        if return_value is not None:
-            return return_value
+        self._storage.write(database)
 
     @property
     def storage(self) -> Storage:
