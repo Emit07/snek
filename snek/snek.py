@@ -70,29 +70,43 @@ class Snek:
 
         self._update_database(update)
 
+    def clear_db(self) -> None:
+        """
+        Completely clears the database and resets the id,
+        mostly written for the tests
+
+        WARNING THIS ACTION CANNOT BE REVERSED
+        """
+
+        self._storage.write([])
+
+        self._id = None
 
     def _generate_id(self) -> int:
         """
         If a new object needs to be inserted an ID will be generated here
         """
 
+        # If id is not empty continue adding to it
         if self._id is not None:
-            _id = self._id
             self._id += 1
 
-            return _id
+            return self._id
 
         database = self._storage.read()
 
+
+        # If the database is empty init the id
         if not database:
             self._id = 0
 
             return self._id
 
-
+        # Else return the length of the database as the new id
         self._id = len(database)
 
         return self._id
+
 
     def _update_database(self, updater):
         """
