@@ -8,6 +8,7 @@ import json
 
 from .storage import Storage
 
+
 class Snek:
 
     def __init__(self, *args, **kwargs):
@@ -20,6 +21,7 @@ class Snek:
 
         self._open = True
         self._id = None
+
 
     def insert(self, data: dict) -> int:
         """
@@ -46,16 +48,6 @@ class Snek:
         return _id
 
 
-    def get(self, object_id: int) -> dict:
-        """
-        Returns an object by the id
-        """
-
-        database = self._storage.read()
-
-        return database[object_id]
-        
-
     def remove(self, object_id: int) -> None:
         """
         Deletes an object based on its id
@@ -80,6 +72,17 @@ class Snek:
                 raise IndexError("Id does not exists")
 
         self._update_database(update)
+
+
+    def get(self, object_id: int) -> dict:
+        """
+        Returns an object by the id
+        """
+
+        database = self._storage.read()
+
+        return database[object_id]
+
 
     def clear_db(self) -> None:
         """
