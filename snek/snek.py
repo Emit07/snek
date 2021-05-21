@@ -45,6 +45,17 @@ class Snek:
 
         return _id
 
+
+    def get(self, object_id: int) -> dict:
+        """
+        Returns an object by the id
+        """
+
+        database = self._storage.read()
+
+        return database[object_id]
+        
+
     def remove(self, object_id: int) -> None:
         """
         Deletes an object based on its id
@@ -82,6 +93,7 @@ class Snek:
 
         self._id = None
 
+
     def _generate_id(self) -> int:
         """
         If a new object needs to be inserted an ID will be generated here
@@ -94,7 +106,6 @@ class Snek:
             return self._id
 
         database = self._storage.read()
-
 
         # If the database is empty init the id
         if not database:

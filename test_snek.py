@@ -13,6 +13,7 @@ class Tests:
 
 		self.test_insert("0")
 		self.test_insert_id("1")
+		self.test_get("2")
 
 		# Do the database teardown
 
@@ -27,7 +28,8 @@ class Tests:
 		assert self.db.insert({"int": 100, "Math": 3*8**3/2}) == 1
 		assert self.db.insert({"list": [1,2,3,4,5]}) == 2
 
-		print(f"PASSED {test_number}")
+		print(f"{test_number} PASSED TEST INERT ID")
+
 
 	def test_insert(self, test_number):
 
@@ -50,7 +52,30 @@ class Tests:
 		for index, _id in enumerate(ids):
 			assert database[_id] == insert_objects[index]
 
-		print(f"PASSED {test_number}")
+		print(f"{test_number} PASSED TEST INSERT")
+
+
+	def test_get(self, test_number):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}}]
+
+		ids = []
+
+		for obj in insert_objects:
+			new_id = self.db.insert(obj)
+
+			ids.append(new_id)
+
+		for _id in ids:
+			assert self.db.get(_id) == insert_objects[_id]
+
+		print(f"{test_number} PASSED TEST GET")
+
 
 if __name__ == "__main__":
 	Tests()
