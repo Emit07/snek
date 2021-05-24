@@ -73,6 +73,11 @@ class Snek:
 
         self._update_database(update)
 
+    def search(self, regex) -> dict:
+
+        database = self._storage.read() 
+
+        return {}
 
     def get(self, object_id: int) -> dict:
         """
@@ -121,6 +126,24 @@ class Snek:
 
         return self._id
 
+    def _generate_test(self, test):
+
+
+        def runner(value):
+            try:
+                # Resolve the path
+                for part in self._path:
+                    value = value[part]
+            except (KeyError, TypeError):
+                return False
+            else:
+                # Perform the specified test
+                return test(value)
+
+        return QueryInstance(
+            lambda value: runner(value),
+            hashval
+        )
 
     def _update_database(self, updater):
         """
