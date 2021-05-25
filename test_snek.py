@@ -11,9 +11,10 @@ class Tests:
 
 		print("TESTING\n" + "-" * 15)
 
-		self.test_insert("0")
-		self.test_insert_id("1")
-		self.test_get("2")
+		self.test_insert(0)
+		self.test_insert_id(1)
+		self.test_get(2)
+		self.test_key(3)
 
 		# Do the database teardown
 
@@ -28,7 +29,7 @@ class Tests:
 		assert self.db.insert({"int": 100, "Math": 3*8**3/2}) == 1
 		assert self.db.insert({"list": [1,2,3,4,5]}) == 2
 
-		print(f"{test_number} PASSED TEST INERT ID")
+		print(f"{test_number} PASSED TEST INSERT ID")
 
 
 	def test_insert(self, test_number):
@@ -75,6 +76,28 @@ class Tests:
 			assert self.db.get(_id) == insert_objects[_id]
 
 		print(f"{test_number} PASSED TEST GET")
+
+
+	def test_key(self, test_number):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}},
+						{"a": 2}]
+
+		ids = []
+
+		for obj in insert_objects:
+			new_id = self.db.insert(obj)
+
+
+		assert self.db.key("Person") == [insert_objects[3]]
+		assert self.db.key("Does not exist") != 0
+
+		print(f"{test_number} PASSED TEST KEY")
 
 
 if __name__ == "__main__":

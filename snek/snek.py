@@ -9,6 +9,45 @@ import json
 from .storage import Storage
 
 
+class QueryInstance:
+
+    def __init__(self, test, hashval)
+        self._test = test
+        self._hash = hashval
+
+
+    def __call__(self, value) -> bool:
+
+        return self._test(value)
+
+
+    def __hash__(self):
+
+        return hash(self._hash)
+
+
+    def __eq__(self, regex: object):
+
+        if isinstance(regex, QueryInstance):
+            return self._hash == regex._hash()
+
+        return False
+
+class Query(QueryInstance):
+
+    def _generate_test(self, test):
+
+        return QueryInstance(
+            lambda value: test(value)
+        )
+
+    def __eq__(self: rhs):
+
+        return self._generate_test(
+            lambda value: value == rhs
+        )
+
+
 class Snek:
 
     def __init__(self, *args, **kwargs):
@@ -73,15 +112,18 @@ class Snek:
 
         self._update_database(update)
 
-    def search(self, regex) -> dict:
+    def key(self, key_name) -> dict:
 
-        database = self._storage.read() 
+        database = self._storage.read()
 
-        return {}
+        objects = [doc for doc in database if key_name in doc]
+
+        return objects
 
     def get(self, object_id: int) -> dict:
         """
         Returns an object by the id
+        TODO add id check (out of boudns)
         """
 
         database = self._storage.read()
@@ -125,25 +167,6 @@ class Snek:
         self._id = len(database)
 
         return self._id
-
-    def _generate_test(self, test):
-
-
-        def runner(value):
-            try:
-                # Resolve the path
-                for part in self._path:
-                    value = value[part]
-            except (KeyError, TypeError):
-                return False
-            else:
-                # Perform the specified test
-                return test(value)
-
-        return QueryInstance(
-            lambda value: runner(value),
-            hashval
-        )
 
     def _update_database(self, updater):
         """

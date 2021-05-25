@@ -20,7 +20,7 @@ class Query:
 		return "QueryInstance"	
 
 	def __eq__(self, other: object):
-		if isinstance(other, Query):
+		if isinstance(other, QueryInstance):
 			return self._hash == other._hash
 
 		return False
