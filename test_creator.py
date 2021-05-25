@@ -1,28 +1,6 @@
 
 from typing import Callable, Mapping, Tuple, Any
 
-DATABASE = [
-	{"name": "Ale", "age": 14},
-	{"name": "John", "age": 20}
-]
-
-def freeze(obj):
-    """
-    Freeze an object by making it immutable and thus hashable.
-    """
-    if isinstance(obj, dict):
-        # Transform dicts into ``FrozenDict``s
-        return FrozenDict((k, freeze(v)) for k, v in obj.items())
-    elif isinstance(obj, list):
-        # Transform lists into tuples
-        return tuple(freeze(el) for el in obj)
-    elif isinstance(obj, set):
-        # Transform sets into ``frozenset``s
-        return frozenset(obj)
-    else:
-        # Don't handle all other objects
-        return obj
-
 class Query:
 
 	def __init__(self, test: Callable, hashval: Tuple):
@@ -66,14 +44,14 @@ class QueryIns(Query):
 
 		return self._generate_test(
 			lambda value: value == rhs,
-			("==", self._path, freeze(rhs))
+			("==", self._path, rhs)
 		)
 
 def main() -> int:
 
 	query = QueryIns()
 
-	print(query == 2)
+	print((query == 2))
 
 	return 0
 
