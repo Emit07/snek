@@ -7,45 +7,7 @@ import os
 import json
 
 from .storage import Storage
-
-
-class QueryInstance:
-
-    def __init__(self, test, hashval)
-        self._test = test
-        self._hash = hashval
-
-
-    def __call__(self, value) -> bool:
-
-        return self._test(value)
-
-
-    def __hash__(self):
-
-        return hash(self._hash)
-
-
-    def __eq__(self, regex: object):
-
-        if isinstance(regex, QueryInstance):
-            return self._hash == regex._hash()
-
-        return False
-
-class Query(QueryInstance):
-
-    def _generate_test(self, test):
-
-        return QueryInstance(
-            lambda value: test(value)
-        )
-
-    def __eq__(self: rhs):
-
-        return self._generate_test(
-            lambda value: value == rhs
-        )
+from .query import Query
 
 
 class Snek:
@@ -111,6 +73,14 @@ class Snek:
                 raise IndexError("Id does not exists")
 
         self._update_database(update)
+
+    def search(self, cond: Query):
+
+        database = self._storage.read()
+
+        objects = [doc for doc in database if cond(doc)]
+
+        return objects
 
     def key(self, key_name) -> dict:
 

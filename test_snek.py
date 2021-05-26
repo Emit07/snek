@@ -1,4 +1,5 @@
 from snek.snek import Snek
+from snek.snek import Query
 from snek.storage import Storage
 
 class Tests:
@@ -15,6 +16,7 @@ class Tests:
 		self.test_insert_id(1)
 		self.test_get(2)
 		self.test_key(3)
+		self.test_search(4)
 
 		# Do the database teardown
 
@@ -99,6 +101,27 @@ class Tests:
 
 		print(f"{test_number} PASSED TEST KEY")
 
+
+	def test_search(self, test_number):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}},
+						{"a": 2}]
+
+		ids = []
+
+		for obj in insert_objects:
+			new_id = self.db.insert(obj)
+
+		# User = Query()
+
+		name = self.db.search(Query("Name") == "Herbie Mann")
+
+		# print(name)
 
 if __name__ == "__main__":
 	Tests()
