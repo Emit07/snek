@@ -75,7 +75,7 @@ class Snek:
         self._update_database(update)
 
     def search(self, cond: Query):
-
+        # IN PROGRESS
         database = self._storage.read()
 
         objects = [doc for doc in database if cond(doc)]
@@ -83,6 +83,9 @@ class Snek:
         return objects
 
     def key(self, key_name) -> dict:
+        """
+        Will return an object if it has the specified key
+        """
 
         database = self._storage.read()
 
