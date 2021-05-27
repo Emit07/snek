@@ -27,7 +27,7 @@ class QueryInstance:
 
 	def __eq__(self, other: object):
 		if isinstance(other, QueryInstance):
-			return self._value == other
+			return self._value == other._value
 
 		return False
 
