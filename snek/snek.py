@@ -78,9 +78,17 @@ class Snek:
         # IN PROGRESS
         database = self._storage.read()
 
-        objects = [doc for doc in database if cond(doc)]
+        # objects = [doc for doc in database if cond(doc)]
 
-        return objects
+        for doc in database:
+            print(doc)
+            print(cond)
+            print(cond(doc))
+
+            print("\n"*3)
+
+        return ""
+
 
     def key(self, key_name) -> dict:
         """

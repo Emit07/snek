@@ -1,6 +1,8 @@
 from snek.snek import Snek
-from snek.snek import Query
+from snek.query import Query
 from snek.storage import Storage
+
+import snek.query as query
 
 class Tests:
 
@@ -117,11 +119,11 @@ class Tests:
 		for obj in insert_objects:
 			new_id = self.db.insert(obj)
 
-		# User = Query()
+		User = Query()
 
-		name = self.db.search(Query("Name") == "Herbie Mann")
+		name = self.db.search(query.where("age") == 73)
 
-		# print(name)
+		print(name)
 
 if __name__ == "__main__":
 	Tests()
