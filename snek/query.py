@@ -67,6 +67,10 @@ class Query(QueryInstance):
 		return self.__getattr__(item)
 
 
+	def __hash__(self):
+		return super().__hash__()
+		
+
 	def _generate_test(
 		self,
 		test: Callable,
