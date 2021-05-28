@@ -19,6 +19,7 @@ class Tests:
 		self.test_get(2)
 		self.test_key(3)
 		self.test_search(4)
+		self.test_id(5)
 
 		# Do the database teardown
 
@@ -110,6 +111,8 @@ class Tests:
 
 		insert_objects=[{"Name": "Herbie Mann", "age": 73},
 						{"Name": "Don Vito Corleone", "age": 53},
+						{"Name": "Gianni", "age": 41},
+						{"Name": "Che Guevera", "age": 38},
 						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
 						{"Person": {"age": 31, "Class": None}},
 						{"a": 2}]
@@ -121,9 +124,34 @@ class Tests:
 
 		User = Query()
 
-		name = self.db.search(query.where("age") == 73)
+		assert self.db.search(User.age == 73) == [insert_objects[0]]
+		assert self.db.search(User._id != 1) == [insert_objects[4]]
+		assert self.db.search(User.age < 40) == [insert_objects[3]]
+		assert self.db.search(User.age > 48) == [insert_objects[0], insert_objects[1]]
+		assert self.db.search(User.Name == "Herbie Mann") == [insert_objects[0]]
+		assert self.db.search(User.Person == {"age": 31, "Class": None}) == [insert_objects[5]]
 
-		print(name)
+		print(f"{test_number} PASSED TEST SEARCH")
+
+
+	def test_id(self, test_number):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}},
+						{"a": 2}]
+
+		for obj in insert_objects:
+			new_id = self.db.insert(obj)
+
+
+		User = Query()
+
+		ids = self.db.id(User.Name == "Herbie Mann")
+
 
 if __name__ == "__main__":
 	Tests()

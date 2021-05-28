@@ -12,20 +12,18 @@ class QueryInstance:
 
 	def __call__(self, value):
 
+		# When the instance is called it runs the test
 		return self._test(value)
-
-
-	def __hash__(self):
-
-		return hash(self._value)
 
 
 	def __repr__(self):
 
+		# Returns the value aiming for
 		return str(self._value)
 
 
 	def __eq__(self, other: object):
+		# Compares the value
 		if isinstance(other, QueryInstance):
 			return self._value == other._value
 
@@ -35,12 +33,15 @@ class QueryInstance:
 class Query(QueryInstance):
 
 	def __init__(self) -> None:
+	
+		# Key that object is aiming for
+		self._key = None
 
-		self._path = ()
-
+		# Returns error if test is empty
 		def notest(_):
 			raise RuntimeError("Empty Query")
 
+		# Passes in values for a null test
 		super().__init__(
 			test=notest,
 			value=(None,)
@@ -55,9 +56,9 @@ class Query(QueryInstance):
 
 		query = type(self)()
 
-		query._path = self._path + (item,)
+		query._key = item
 
-		query._value = ("path", query._path)
+		query._value = query._key
 
 		return query
 
@@ -71,27 +72,110 @@ class Query(QueryInstance):
 		return super().__hash__()
 		
 
-	def _generate_test(
-		self,
-		test: Callable,
-		value: Tuple,
-		allow_empty_path: bool = False
-	) -> QueryInstance:
+	def _generate_test( self, test: Callable, value: Tuple) -> QueryInstance:
 
-		if not self._path and not allow_empty_path:
+		if self._key is None:
 			raise ValueError("Query has no path")
 			
+		# Creates a query instance
 		return QueryInstance(
 			lambda value: test(value),
-			value
+			("==", self._key, value)
 		)
 
 
-	def __eq__(self, rhs: Any):
+	def __eq__(self, other: Any):
+
+		# Basic test function to compare value
+		def test(value):
+			# TODO could be a simple lambda, figure it out
+
+			# Checks if value exists and the returns if it exists
+			if self._value in value:
+				return value[self._value] == other
+
+			return False
+
+
+		# TODO Fix not needed stuff
+		return self._generate_test(
+			test,
+			("==", self._key, other)
+		)
+
+
+	def __ne__(self, other: Any):
+
+		def test(value):
+
+			if self._value in value:
+				return value[self._value] != other
+
+			return False
 
 		return self._generate_test(
-			lambda value: value == rhs,
-			("==", self._path, rhs)
+			test,
+			()
+		)
+
+
+	def __lt__(self, other: Any): 
+
+		def test(value):
+
+			if self._value in value:
+				return value[self._value] < other
+
+			return False
+
+		return self._generate_test(
+			test,
+			()
+		)
+
+
+	def __gt__(self, other: Any):
+
+		def test(value):
+
+			if self._value in value:
+				return value[self._value] > other
+
+			return False
+
+		return self._generate_test(
+			test,
+			()
+		)
+
+
+	def __le__(self, other: Any):
+
+		def test(value):
+
+			if self._value in value:
+				return value[self._value] <= other
+
+			return False
+
+		return self._generate_test(
+			test,
+			()
+		)
+
+
+	def __ge__(self, other: Any):
+
+		def test(value):
+
+			if self._value in value:
+				return value[self._value] <= other
+
+			return False
+
+		return self._generate_test(
+			test,
+			()
 		)
 
 def where(key: str) -> Query:

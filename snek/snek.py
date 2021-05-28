@@ -74,20 +74,30 @@ class Snek:
 
         self._update_database(update)
 
+
     def search(self, cond: Query):
-        # IN PROGRESS
+        """
+        This will return an object, this is mainly for read purposes    
+        """
+
         database = self._storage.read()
 
-        # objects = [doc for doc in database if cond(doc)]
+        # Checks if the condition matches the document
+        objects = [doc for doc in database if cond(doc)]
 
-        for doc in database:
-            print(doc)
-            print(cond)
-            print(cond(doc))
+        return objects
 
-            print("\n"*3)
 
-        return ""
+    def id(self, cond: Query):
+        """
+        Returns ID that matches query condition 
+        """
+
+        database = self._storage.read()
+
+        ids = [index for index, doc in enumerate(database) if cond(doc)]
+
+        return ids
 
 
     def key(self, key_name) -> dict:
@@ -100,6 +110,7 @@ class Snek:
         objects = [doc for doc in database if key_name in doc]
 
         return objects
+
 
     def get(self, object_id: int) -> dict:
         """
