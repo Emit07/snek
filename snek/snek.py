@@ -9,6 +9,13 @@ import json
 from .storage import Storage
 from .query import Query
 
+class Document(dict):
+
+    def __init__(self, value: dict, doc_id: int):
+
+        self.value = value
+        self.id = doc_id
+        
 
 class Snek:
 
@@ -180,6 +187,11 @@ class Snek:
 
     @property
     def storage(self) -> Storage:
+        """
+        This returns the storage handle that is used to interact with the file,
+        It is not recomended to use the handle for reading and writing because
+        it might interfere with the database
+        """
 
         return self._storage
 

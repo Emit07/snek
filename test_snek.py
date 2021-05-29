@@ -154,4 +154,10 @@ class Tests:
 
 
 if __name__ == "__main__":
-	Tests()
+	# Tests()
+
+	from snek.snek import Document 
+
+	d = Document({"a": 0}, 0)
+
+	print(d)
