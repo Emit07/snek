@@ -15,7 +15,12 @@ class Document(dict):
 
         self.value = value
         self.id = doc_id
-        
+
+
+    def __repr__(self):
+
+        return "{}({})".format(type(self).__name__, self.id)
+
 
 class Snek:
 
@@ -127,7 +132,7 @@ class Snek:
 
         database = self._storage.read()
 
-        return database[object_id]
+        return Document(database[object_id], object_id)
 
 
     def clear_db(self) -> None:

@@ -78,7 +78,9 @@ class Tests:
 			ids.append(new_id)
 
 		for _id in ids:
-			assert self.db.get(_id) == insert_objects[_id]
+			id_doc = self.db.get(_id)
+			assert id_doc.value == insert_objects[_id]
+			assert id_doc.id == _id
 
 		print(f"{test_number} PASSED TEST GET")
 
@@ -154,10 +156,4 @@ class Tests:
 
 
 if __name__ == "__main__":
-	# Tests()
-
-	from snek.snek import Document 
-
-	d = Document({"a": 0}, 0)
-
-	print(d)
+	Tests()
