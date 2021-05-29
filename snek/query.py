@@ -5,6 +5,10 @@ from typing import Tuple, Callable, Any, Union, List
 class QueryInstance: 
 
 	def __init__(self, test: Callable, value):
+		"""
+		This function sets up the global variables for the test and the
+		Value that needs to be tested
+		"""
 
 		self._test = test
 		self._value = value
@@ -20,14 +24,6 @@ class QueryInstance:
 
 		# Returns the value aiming for
 		return str(self._value)
-
-
-	def __eq__(self, other: object):
-		# Compares the value
-		if isinstance(other, QueryInstance):
-			return self._value == other._value
-
-		return False
 
 
 class Query(QueryInstance):
@@ -49,11 +45,14 @@ class Query(QueryInstance):
 
 
 	def __repr__(self):
+
 		return "{}()".format(type(self).__name__)
 
 
 	def __getattr__(self, item: str):
+		# Creates a new query instance for comparing 
 
+		# Subclass
 		query = type(self)()
 
 		query._key = item
@@ -66,10 +65,6 @@ class Query(QueryInstance):
 	def __getitem__(self, item: str):
 
 		return self.__getattr__(item)
-
-
-	def __hash__(self):
-		return super().__hash__()
 		
 
 	def _generate_test( self, test: Callable, value: Tuple) -> QueryInstance:
@@ -177,6 +172,7 @@ class Query(QueryInstance):
 			test,
 			()
 		)
+
 
 def where(key: str) -> Query:
 

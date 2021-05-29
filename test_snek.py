@@ -109,7 +109,7 @@ class Tests:
 
 		self.db.clear_db()
 
-		insert_objects=[{"Name": "Herbie Mann", "age": 73},
+		insert_objects=[{"Name": "Herbie Mann", "age": 73, "Instrument": "flute"},
 						{"Name": "Don Vito Corleone", "age": 53},
 						{"Name": "Gianni", "age": 41},
 						{"Name": "Che Guevera", "age": 38},
