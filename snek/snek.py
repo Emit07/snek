@@ -3,11 +3,11 @@
 Main module of snek. Handles the setup and configuration of the database
 """
 
-import os
-import json
-
 from .storage import Storage
 from .query import Query
+
+from typing import Optional
+
 
 class Document(dict):
 
@@ -45,7 +45,7 @@ class Snek:
         # Returns an error if the object is not a dictionary
         if not isinstance(data, dict):
             # TODO rewrite a better error message
-            raise ValueError("Data is not dict")
+            raise ValueError("Value passed through is not a dictionary")
 
         _id = self._generate_id()
 
@@ -61,23 +61,46 @@ class Snek:
         return _id
 
 
-    def remove(self, object_id: int) -> None:
+    def update(
+        self, 
+        data: dict, 
+        cond: Optional[Query] = None, 
+        doc_id: Optional[int] = None
+    ) -> Document:
+
+        # UNTESTED, STILL IN PROGRESS 
+
+        if doc_id is not None:
+            
+            def update(database: list):
+
+                database[doc_id] = data
+
+
+        elif cond is not None:
+
+            for doc in database:
+                if cond(doc):
+                    database[doc_id] = data
+
+
+    def remove(self, doc_id: int) -> None:
         """
         Deletes an object based on its id
         """
 
         # Returns an error if the object is not an int
-        if not isinstance(object_id, int):
+        if not isinstance(doc_id, int):
             # TODO rewrite a better error message
             raise ValueError("id is not int")
 
         def update(database: list):
 
             # Checks if the id exists, if not return an error
-            if len(database)-1 >= object_id:
+            if len(database)-1 >= doc_id:
 
                 # Removes the document with the id
-                database.pop(object_id)
+                database.pop(doc_id)
 
             else:
 
@@ -87,7 +110,7 @@ class Snek:
         self._update_database(update)
 
 
-    def search(self, cond: Query):
+    def search(self, cond: Query) -> list:
         """
         This will return an object, this is mainly for read purposes    
         """
@@ -95,7 +118,7 @@ class Snek:
         database = self._storage.read()
 
         # Checks if the condition matches the document
-        objects = [doc for doc in database if cond(doc)]
+        objects = [Document(doc, index) for index, doc in enumerate(database) if cond(doc)]
 
         return objects
 
@@ -124,7 +147,11 @@ class Snek:
         return objects
 
 
-    def get(self, object_id: int) -> dict:
+    def get(
+        self, 
+        cond: Optional[Query] = None,
+        doc_id: Optional[int] = None 
+    ) -> Optional[Document]:
         """
         Returns an object by the id
         TODO add id check (out of boudns)
@@ -132,7 +159,21 @@ class Snek:
 
         database = self._storage.read()
 
-        return Document(database[object_id], object_id)
+        if doc_id is not None:
+
+            return Document(database[doc_id], doc_id)
+
+
+        elif cond is not None:
+
+            for index, doc in enumerate(database):
+                
+                if cond(doc):
+                    return Document(doc, index)
+
+            return None
+
+        raise RuntimeError("You have to pass an object id or a query")
 
 
     def clear_db(self) -> None:

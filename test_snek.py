@@ -16,10 +16,11 @@ class Tests:
 
 		self.test_insert(0)
 		self.test_insert_id(1)
-		self.test_get(2)
-		self.test_key(3)
-		self.test_search(4)
-		self.test_id(5)
+		self.test_get_id(2)
+		self.test_get_query(3)
+		self.test_key(4)
+		self.test_search(5)
+		self.test_id(6)
 
 		# Do the database teardown
 
@@ -61,7 +62,7 @@ class Tests:
 		print(f"{test_number} PASSED TEST INSERT")
 
 
-	def test_get(self, test_number):
+	def test_get_id(self, test_number):
 
 		self.db.clear_db()
 
@@ -78,11 +79,37 @@ class Tests:
 			ids.append(new_id)
 
 		for _id in ids:
-			id_doc = self.db.get(_id)
+			id_doc = self.db.get(doc_id=_id)
 			assert id_doc.value == insert_objects[_id]
 			assert id_doc.id == _id
 
-		print(f"{test_number} PASSED TEST GET")
+		print(f"{test_number} PASSED TEST GET ID")
+
+
+	def test_get_query(self, test_number):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73, "Instrument": "flute"},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"Name": "Gianni", "age": 41},
+						{"Name": "Che Guevera", "age": 38},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}},
+						{"a": 2}]
+
+		for obj in insert_objects:
+			new_id = self.db.insert(obj)
+
+		User = Query()
+
+		assert self.db.get(cond=User.age == 73).value == insert_objects[0]
+		assert self.db.get(cond=User._id != 1).value == insert_objects[4]
+		assert self.db.get(cond=User.age < 40).value == insert_objects[3]
+		assert self.db.get(cond=User.age > 48).value == insert_objects[0], insert_objects[1]
+		assert self.db.get(cond=User.Name == "Herbie Mann").value == insert_objects[0]
+
+		print(f"{test_number} PASSED TEST GET QUERY")
 
 
 	def test_key(self, test_number):
@@ -126,12 +153,12 @@ class Tests:
 
 		User = Query()
 
-		assert self.db.search(User.age == 73) == [insert_objects[0]]
-		assert self.db.search(User._id != 1) == [insert_objects[4]]
-		assert self.db.search(User.age < 40) == [insert_objects[3]]
-		assert self.db.search(User.age > 48) == [insert_objects[0], insert_objects[1]]
-		assert self.db.search(User.Name == "Herbie Mann") == [insert_objects[0]]
-		assert self.db.search(User.Person == {"age": 31, "Class": None}) == [insert_objects[5]]
+		assert self.db.search(User.age == 73)[0].value == insert_objects[0]
+		assert self.db.search(User._id != 1)[0].value == insert_objects[4]
+		assert self.db.search(User.age < 40)[0].value == insert_objects[3]
+		assert self.db.search(User.age > 48)[0].value == insert_objects[0], insert_objects[1]
+		assert self.db.search(User.Name == "Herbie Mann")[0].value == insert_objects[0]
+		assert self.db.search(User.Person == {"age": 31, "Class": None})[0].value == insert_objects[5]
 
 		print(f"{test_number} PASSED TEST SEARCH")
 
