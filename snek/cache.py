@@ -1,18 +1,18 @@
 
+from typing import Callable
+
 
 class Cache:
 
 
-	def __init__(self, storage, modification_limit: int = 50):
-		
-		print("CACHE BEING USED")
+	def __init__(self, storage: Callable):
 
 		self._storage = storage
 
 		self.memory = []
 
 		self._cache_modifications = 0
-		self._modification_limit = modification_limit
+		self._modification_limit = 50
 
 
 	def read(self):
@@ -36,6 +36,7 @@ class Cache:
 		self._storage.write(self.memory)
 
 		self._cache_modifications = 0
+
 
 	def close(self):
 

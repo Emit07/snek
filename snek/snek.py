@@ -7,7 +7,7 @@ from .storage import Storage
 from .query import Query
 from .cache import Cache
 
-from typing import Optional, Dict, Callable, Iterator
+from typing import Optional, Dict, Callable, Any, Iterator
 
 
 class Document(dict):
@@ -21,17 +21,22 @@ class Document(dict):
 class Snek:
 
 
-    default_storage = Storage
-
     def __init__(self, *args, **kwargs):
         """
         Initiates the snek database
         """
 
-        storage = kwargs.pop("storage", self.default_storage)
+        kstorage = kwargs.pop("storage", Storage)
 
-        # Creates a storage object to interact with the database file
-        self._storage = storage(*args, **kwargs)
+        handle = Storage(*args, **kwargs)
+
+        if kstorage is not None: 
+            # Creates a storage object to interact with the database file
+            self._storage = kstorage(handle)
+
+        else:
+
+            self._storage = handle
 
         self._open = True
         self._id = None
@@ -203,7 +208,7 @@ class Snek:
         return ids
 
 
-    def key(self, key_name) -> dict:
+    def key(self, key_name: Any) -> dict:
         """
         Will return a document if it has the specified key
         """

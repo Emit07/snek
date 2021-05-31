@@ -164,7 +164,7 @@ class Query(QueryInstance):
 		def test(value):
 
 			if self._value in value:
-				return value[self._value] <= other
+				return value[self._value] >= other
 
 			return False
 
