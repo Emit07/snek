@@ -5,8 +5,9 @@ Main module of snek. Handles the setup and configuration of the database
 
 from .storage import Storage
 from .query import Query
+from .cache import Cache
 
-from typing import Optional
+from typing import Optional, Dict, Iterator
 
 
 class Document(dict):
@@ -19,7 +20,7 @@ class Document(dict):
 
 class Snek:
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, cache=None, *args, **kwargs):
         """
         Initiates the snek database
         """
@@ -29,6 +30,14 @@ class Snek:
 
         self._open = True
         self._id = None
+
+        if cache is not None:
+            pass 
+
+
+    def __len__(self) -> int:
+
+        return len(self._storage.read())
 
 
     def insert(self, data: dict) -> int:
