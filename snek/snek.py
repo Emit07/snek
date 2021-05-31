@@ -7,7 +7,7 @@ from .storage import Storage
 from .query import Query
 from .cache import Cache
 
-from typing import Optional, Dict, Iterator
+from typing import Optional, Dict, Callable, Iterator
 
 
 class Document(dict):
@@ -20,19 +20,21 @@ class Document(dict):
 
 class Snek:
 
-    def __init__(self, cache=None, *args, **kwargs):
+
+    default_storage = Storage
+
+    def __init__(self, *args, **kwargs):
         """
         Initiates the snek database
         """
 
+        storage = kwargs.pop("storage", self.default_storage)
+
         # Creates a storage object to interact with the database file
-        self._storage = Storage(*args, **kwargs)
+        self._storage = storage(*args, **kwargs)
 
         self._open = True
         self._id = None
-
-        if cache is not None:
-            pass 
 
 
     def __len__(self) -> int:

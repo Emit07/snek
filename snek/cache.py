@@ -3,9 +3,10 @@
 class Cache:
 
 
-
 	def __init__(self, storage, modification_limit: int = 50):
 		
+		print("CACHE BEING USED")
+
 		self._storage = storage
 
 		self.memory = []
@@ -26,7 +27,7 @@ class Cache:
 		self.memory.append(data)
 		self._cache_modifications += 1
 
-		if self._cache_modifications >= self.modification_limit:
+		if self._cache_modifications >= self._modification_limit:
 			self.apply()
 
 

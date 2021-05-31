@@ -1,8 +1,7 @@
 from snek.snek import Snek
 from snek.query import Query
 from snek.storage import Storage
-
-import snek.query as query
+from snek.cache import Cache
 
 import time
 
@@ -10,7 +9,7 @@ class Tests:
 
 	def __init__(self):
 		# Create the instance
-		self.db = Snek(path="test_database.json", mode="w+", create_dir=True)
+		self.db = Snek("test_database.json")
 
 		# Call the tests
 
