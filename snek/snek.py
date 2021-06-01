@@ -26,9 +26,9 @@ class Snek:
         Initiates the snek database
         """
 
-        kstorage = kwargs.pop("storage", Storage)
+        storage = kwargs.pop("storage", Storage)
 
-        self._storage = kstorage(*args, **kwargs)
+        self._storage = storage(*args, **kwargs)
 
         self._open = True
         self._id = None

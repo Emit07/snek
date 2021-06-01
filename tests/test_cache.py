@@ -18,4 +18,36 @@ class Test_Cache(unittest.TestCase):
 
 
 	def test_read(self):
-		self.db.insert({"int": 0, "char": "a"})
+		
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73, "Instrument": "flute"},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"Name": "Gianni", "age": 41},
+						{"Name": "Che Guevera", "age": 38},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}}]
+
+		for obj in insert_objects:
+			self.db.insert(obj)
+
+		self.assertEqual(self.db.all(), insert_objects)
+
+
+	def test_write(self):
+
+		self.db.clear_db()
+
+		insert_objects=[{"Name": "Herbie Mann", "age": 73, "Instrument": "flute"},
+						{"Name": "Don Vito Corleone", "age": 53},
+						{"Name": "Gianni", "age": 41},
+						{"Name": "Che Guevera", "age": 38},
+						{"_id": 1234, "market_list": ["Eggs", "Hot Sauce", "Garlic"]},
+						{"Person": {"age": 31, "Class": None}}]
+
+		for obj in insert_objects:
+			self.db.insert(obj)
+
+		self.assertEqual(self.db.all(), insert_objects)
+		self.db.storage.write([])
+		self.assertEqual(self.db.all(), [])
