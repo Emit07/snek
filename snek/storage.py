@@ -74,12 +74,14 @@ class Storage:
 
         self._handle.truncate()
 
+
     def close(self) -> None:
         """
         Closes the database and ensures that it is disconnected cleanly and properly
         """
 
         self._handle.close()
+
 
     @property
     def size(self) -> None:
@@ -89,9 +91,13 @@ class Storage:
         self._handle.seek(0, os.SEEK_END)
         return self._handle.tell()
 
-class Cache:
+
+class MemoryStorage:
 
     def __init__(self):
+        """
+        A simple class to hold the storage in memory if needed
+        """
 
         self.memory = None
 
