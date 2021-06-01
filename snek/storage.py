@@ -21,6 +21,7 @@ def create(path: str, create_dir):
     with open(path, "a"):
         pass
 
+
 class Storage:
 
     def __init__(self, path: str, mode="r+", create_dir=False):

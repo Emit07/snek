@@ -1,13 +1,26 @@
 
-from typing import Callable
+
+class Middleware:
+		
+	def __init__(self, storage_class):
+
+		self._storage_class = storage_class
+		self._storage = None
 
 
-class Cache:
+	def __call__(self, *args, **kwargs):
+
+		self._storage = self._storage_class(*args, **kwargs)
+
+		return self
 
 
-	def __init__(self, storage: Callable):
+class Cache(Middleware):
 
-		self._storage = storage
+
+	def __init__(self, storage_class):
+
+		super().__init__(storage_class)
 
 		self.memory = []
 
@@ -24,7 +37,7 @@ class Cache:
 
 	def write(self, data: dict):
 
-		self.memory.append(data)
+		self.memory = data
 		self._cache_modifications += 1
 
 		if self._cache_modifications >= self._modification_limit:

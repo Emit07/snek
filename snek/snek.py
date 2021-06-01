@@ -28,15 +28,7 @@ class Snek:
 
         kstorage = kwargs.pop("storage", Storage)
 
-        handle = Storage(*args, **kwargs)
-
-        if kstorage is not None: 
-            # Creates a storage object to interact with the database file
-            self._storage = kstorage(handle)
-
-        else:
-
-            self._storage = handle
+        self._storage = kstorage(*args, **kwargs)
 
         self._open = True
         self._id = None
