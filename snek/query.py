@@ -79,7 +79,16 @@ class Query(QueryInstance):
 		)
 
 
+
+	"""
+	Below this comment are all the magic methods used for comparing the query.
+	All these methods contain the same boiler plate only changing the comparison
+	"""
+
 	def __eq__(self, other: Any):
+		"""
+		Is equal to "==" method, creates test for this comparison
+		"""
 
 		# Basic test function to compare value
 		def test(value):
@@ -100,6 +109,9 @@ class Query(QueryInstance):
 
 
 	def __ne__(self, other: Any):
+		"""
+		Not equal to "!=" method, creates test for this comparison
+		"""
 
 		def test(value):
 
@@ -115,6 +127,9 @@ class Query(QueryInstance):
 
 
 	def __lt__(self, other: Any): 
+		"""
+		Less than "<" method, creates test for this comparison
+		"""
 
 		def test(value):
 
@@ -130,6 +145,9 @@ class Query(QueryInstance):
 
 
 	def __gt__(self, other: Any):
+		"""
+		Greater than to ">" method, creates test for this comparison
+		"""
 
 		def test(value):
 
@@ -145,6 +163,9 @@ class Query(QueryInstance):
 
 
 	def __le__(self, other: Any):
+		"""
+		Less than or equal to "<=" method, creates test for this comparison
+		"""
 
 		def test(value):
 
@@ -160,6 +181,9 @@ class Query(QueryInstance):
 
 
 	def __ge__(self, other: Any):
+		"""
+		Greater than or equal to ">=" method, creates test for this comparison
+		"""
 
 		def test(value):
 
@@ -175,6 +199,9 @@ class Query(QueryInstance):
 
 
 def where(key: str) -> Query:
+	"""
+	Different syntax for query
+	"""
 
 	return Query()[key]
 

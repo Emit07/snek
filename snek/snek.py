@@ -13,6 +13,10 @@ from typing import Optional, Dict, Callable, Any, Iterator
 class Document(dict):
 
     def __init__(self, value: dict, doc_id: int):
+        """
+        A boiler plate for all the documents given to the user. These documents
+        display their value but also have an "id" attribute.
+        """
 
         super().__init__(value)
         self.id = doc_id
