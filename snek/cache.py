@@ -26,7 +26,7 @@ class Middleware:
 class Cache(Middleware):
 
 
-	def __init__(self, storage_class):
+	def __init__(self, storage_class, modification_limit: int = 50):
 		"""
 		This is a cache that is meant to speed up the database by saving
 		the data in memory and not reading/writing everytime that an
@@ -41,7 +41,7 @@ class Cache(Middleware):
 		# Keeps track of the cache modifcations and will write them if 
 		# it exceeds a threshold
 		self._cache_modifications = 0
-		self._modification_limit = 50
+		self._modification_limit = modification_limit
 
 
 	def read(self):
