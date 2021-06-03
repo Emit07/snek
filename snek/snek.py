@@ -78,6 +78,7 @@ class Snek:
         Updates a document, takes in either an id or a query
         
         TODO allow appending, removing, and overwrite config
+        TODO return Document
         STILL IN PROGRESS 
         """
 
@@ -102,6 +103,7 @@ class Snek:
                     def update(database: list):
                         # Updates the idex
                         database[index] = data
+
 
         else:
 

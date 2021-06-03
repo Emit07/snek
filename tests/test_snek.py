@@ -3,7 +3,7 @@ import unittest
 
 from snek import Snek
 
-class Test_Cache(unittest.TestCase):
+class Test_Snek(unittest.TestCase):
 
 	def setUp(self):
 		self.db = Snek("test_database.json")
