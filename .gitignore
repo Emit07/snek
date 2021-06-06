@@ -1,2 +1,8 @@
+
+*.egg
+*.egg-info
+build
+dist
+snek.egg-info
 __pycache__
 *.json

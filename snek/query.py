@@ -33,6 +33,8 @@ class Query(QueryInstance):
 		# Key that object is aiming for
 		self._key = None
 
+		self._query_cache = []
+
 		# Returns error if test is empty
 		def notest(_):
 			raise RuntimeError("Empty Query")
