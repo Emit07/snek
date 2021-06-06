@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import snek.__version__
 import sys                                                                                                              
                                                                                                                         
 if sys.version_info < (3, 5):                                                                                           
@@ -6,7 +7,7 @@ if sys.version_info < (3, 5):
 
 setup(
     name="SnekDB",
-    version="0.0.1",
+    version=snek.__version__,
     author="Alessandro De Leo",
     author_email="emit07@protonmail.com",
     description="A very small and leightweight nosql database written in pure python",
