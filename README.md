@@ -1,4 +1,19 @@
-# SNEK v0.0.1
+<div align="center">
+	[Version](https://img.shields.io/badge/version-v0.0.1-brightgreen)
+	[Python Version](https://img.shields.io/badge/python-3.5%2B-brightgreen)
+	[License](https://img.shields.io/github/license/emit07/snek)
+	p
+	[Stars](https://shields.io/github/stars/emit07/snek?style=social)
+</div>
+
+
+<div align="center">
+	<img width="200" height="200" src="https://raw.githubusercontent.com/Emit07/snek/master/logo/snek.png">
+</div>	
+
+<p align="center">
+	<h1>SNEK</h1>
+</p>
 
 Snek is a lightweight local nosql document oriented database which allows the user to store json data locally. Snek is meant to be readable, easy to use, and somewhat quick. A lot of inspiration comes from [TinyDB](https://github.com/msiemens/tinydb), this project would not be possible without learning from TinyDB. Snek was not developed to be used as database for a fortune 500 company or to hold every facebook account, instead it was developed for use in middle and small scale projects. My idea behind creating this was to create a small database that could be used without a big setup or fuss and also still be usefull to what I need it for. I like the idea of using something I created for projects. Another driving principle is learning from a tool. Feel free to use and improve.
 
