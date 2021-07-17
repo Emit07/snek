@@ -1,8 +1,8 @@
 <div align="center">
-	![Version](https://img.shields.io/badge/version-v0.0.1-brightgreen)	
-	![Python Version](https://img.shields.io/badge/python-3.5%2B-brightgreen)
-	![License](https://img.shields.io/github/license/emit07/snek)
-	![Stars](https://shields.io/github/stars/emit07/snek?style=social) 
+	<img src="https://img.shields.io/badge/version-v0.0.1-brightgreen">
+	<img src="https://img.shields.io/badge/python-3.5%2B-brightgreen">
+	<img src="https://img.shields.io/github/license/emit07/snek">
+	<img src="https://shields.io/github/stars/emit07/snek?style=social"> 
 </div>
 
 
