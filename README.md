@@ -7,24 +7,24 @@
 
 
 <div align="center">
-	<img width="200" height="200" src="https://raw.githubusercontent.com/Emit07/snek/master/logo/snek.png">
+	<img width="200" height="200" style="margin: 20px" src="https://raw.githubusercontent.com/Emit07/snek/master/logo/snek.png">
 </div>	
 
-<p align="center">
-	<h1>SNEK</h1>
-</p>
+<h1 align="center">
+	SNEK
+</h1>
 
 Snek is a lightweight local nosql document oriented database which allows the user to store json data locally. Snek is meant to be readable, easy to use, and somewhat quick. A lot of inspiration comes from [TinyDB](https://github.com/msiemens/tinydb), this project would not be possible without learning from TinyDB. Snek was not developed to be used as database for a fortune 500 company or to hold every facebook account, instead it was developed for use in middle and small scale projects. My idea behind creating this was to create a small database that could be used without a big setup or fuss and also still be usefull to what I need it for. I like the idea of using something I created for projects. Another driving principle is learning from a tool. Feel free to use and improve.
 
 ### Getting Started
 
-First off, you need to install Snek you need to have pip installed and have python running at version 3.5 minimum. To install Snek simply type whats below.
+First off, you need to install Snek you need to have pip installed and have python running at version 3.5 minimum. You can always run Snek through source by cloning this repo. To install Snek through pip simply type whats below.
 
 ```
 pip install SnekDB
 ```
 
-Once you have snek installed, set up a basic database an insert your first Document.
+Once you have Snek installed, set up a basic database an insert your first Document.
 
 ```python
 from snek import Snek
